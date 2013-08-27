@@ -53,9 +53,8 @@ task uberjar(type: Jar, dependsOn: jar) {
 }
 
 task cleanChef() {
-    fileTree(dir: chefFilesDir, exclude: 'etc_initd_consent_service').each {
-        it.delete()
-    }
+    file("$chefFilesDir/consent.yaml").delete()
+    file("$chefFilesDir/consent_service-standalone.jar").delete()
 }
 
 task generateChef(type: Copy, dependsOn: [cleanChef, uberjar]) {
