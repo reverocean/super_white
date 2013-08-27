@@ -13,7 +13,9 @@ targetCompatibility = '1.6'
 
 project.ext {
     dropwizardVersion = '0.6.2'
-    chefFilesDir = 'chef/cookbooks/consent_service/files/default'
+    chefDir = "$projectDir/chef"
+    chefFilesDir = "$chefDir/cookbooks/consent_service/files/default"
+    knifeConfigFile = "$chefDir/.chef/knife.rb"
 }
 
 run {
@@ -52,7 +54,7 @@ task uberjar(type: Jar, dependsOn: jar) {
     }
 }
 
-task cleanChef() {
+task cleanChef() << {
     file("$chefFilesDir/consent.yaml").delete()
     file("$chefFilesDir/consent_service-standalone.jar").delete()
 }
@@ -61,4 +63,8 @@ task generateChef(type: Copy, dependsOn: [cleanChef, uberjar]) {
     from('src/main/resources/consent.yaml')
     from("$buildDir/libs/consent_service-standalone.jar")
     into chefFilesDir
+}
+
+task uploadChef(dependsOn: generateChef) << {
+    println "knife cookbook upload --all -c $knifeConfigFile".execute(null, new File(chefDir)).text
 }
