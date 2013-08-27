@@ -1,0 +1,59 @@
+start () {
+    echo -n "Starting consent_service..."
+    daemon --chdir='/' --command "java -jar /consent_service.jar server /consent.yaml" --name=consent_service --verbose
+
+    RETVAL=$?
+    if [ $RETVAL = 0 ]
+    then
+        echo "done."
+    else
+        echo "failed. See error code for more information."
+    fi
+    return $RETVAL
+}
+
+stop () {
+    echo -n "Stopping consent_service..."
+
+    daemon --stop --name=consent_service  --verbose
+    RETVAL=$?
+
+    if [ $RETVAL = 0 ]
+    then
+        echo "Done."
+    else
+        echo "Failed. See error code for more information."
+    fi
+    return $RETVAL
+}
+
+
+restart () {
+    daemon --restart --name=consent_service --verbose
+}
+
+
+status () {
+    daemon --running --verbose --name=consent_service
+    return $?
+}
+
+
+case "$1" in
+    start)
+        start
+    ;;
+    status)
+        status
+    ;;
+    stop)
+        stop
+    ;;
+    restart)
+        restart
+    ;;
+    *)
+        echo $"Usage: consent_service {start|status|stop|restart}"
+        exit 3
+    ;;
+esac

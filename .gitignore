@@ -6,3 +6,6 @@ out
 *.iml
 *.ipr
 *.iws
+
+chef/cookbooks/consent_service/files/default/consent_service-standalone.jar
+chef/cookbooks/consent_service/files/default/consent.yaml

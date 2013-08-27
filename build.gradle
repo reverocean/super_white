@@ -8,8 +8,12 @@ repositories {
     mavenCentral()
 }
 
+sourceCompatibility = '1.6'
+targetCompatibility = '1.6'
+
 project.ext {
     dropwizardVersion = '0.6.2'
+    chefFilesDir = 'chef/cookbooks/consent_service/files/default'
 }
 
 run {
@@ -46,4 +50,16 @@ task uberjar(type: Jar, dependsOn: jar) {
     manifest {
         attributes 'Main-Class': mainClassName
     }
+}
+
+task cleanChef() {
+    fileTree(dir: chefFilesDir, exclude: 'etc_initd_consent_service').each {
+        it.delete()
+    }
+}
+
+task generateChef(type: Copy, dependsOn: [cleanChef, uberjar]) {
+    from('src/main/resources/consent.yaml')
+    from("$buildDir/libs/consent_service-standalone.jar")
+    into chefFilesDir
 }
