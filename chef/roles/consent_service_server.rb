@@ -11,7 +11,7 @@ default_attributes(
 )
 
 run_list(
-  'recipe[apt]'
+  'recipe[apt]',
   'recipe[java]',
   'recipe[consent_service]',
 )
