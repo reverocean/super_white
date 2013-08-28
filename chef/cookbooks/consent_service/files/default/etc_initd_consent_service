@@ -1,5 +1,5 @@
 start () {
-    echo -n "Starting consent_service..."
+    echo -n "Starting consent_service ..."
     daemon --chdir='/' --command "java -jar /consent_service.jar server /consent.yaml" --name=consent_service --verbose
 
     RETVAL=$?

@@ -7,13 +7,19 @@
 # All rights reserved - Do Not Redistribute
 #
 
-cookbook_file '/consent_service.jar' do
-    source 'consent_service-standalone.jar'
-    mode '777'
+bash 'install_daemon' do
+    code <<-EOH
+       apt-get install daemon
+    EOH
 end
 
 cookbook_file '/consent.yaml' do
     source 'consent.yaml'
+    mode '777'
+end
+
+cookbook_file '/consent_service.jar' do
+    source 'consent_service-standalone.jar'
     mode '777'
 end
 
