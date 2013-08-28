@@ -3,7 +3,7 @@ description 'A single consent service server'
 
 default_attributes(
   :java => {
-  	 :install_flavor => 'oracle',
+     :install_flavor => 'oracle',
      :oracle => {
        "accept_oracle_download_terms" => true
      }
