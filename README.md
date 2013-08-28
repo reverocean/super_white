@@ -10,6 +10,13 @@ super_white
   or simply
   ``gradle uC``
   at the root of project.
+  
+# Test
+  After consent_service is running, you can use curl to test whether the service is running
+###  Post Consent
+  ``curl -H "Content-Type: application/json" -X POST -d '{"indicator": "yes"}' http://your_server:8080/consent``
+### Get Consent
+  ``curl -H "Content-Type: application/json" -X GET  http://your_server:8080/consent/1``
 
 # Tech
 ## DropWizard
