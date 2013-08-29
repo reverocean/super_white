@@ -34,7 +34,8 @@ bash 'db_migrate' do
     EOH
 end
 
-service 'consent_service' do
-    supports :restart => true, :start => true, :stop => true, :reload => true
-    action [:enable, :start]
+bash 'start_consent_service' do
+    code <<-EOH
+        service consent_service start
+    EOH
 end

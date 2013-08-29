@@ -1,6 +1,6 @@
 start () {
-    echo -n "Starting consent_service ..."
-    daemon --chdir='/' --command "java -jar /consent_service.jar server /consent.yaml" --name=consent_service --verbose
+    echo -n "Starting consent_service..."
+    daemon --chdir='/' --command "java -jar /consent_service.jar server /consent.yaml" --name=consent_service --verbose -E=/tmp/start.err -O=/tmp/start.out
 
     RETVAL=$?
     if [ $RETVAL = 0 ]
