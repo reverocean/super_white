@@ -22,6 +22,9 @@ super_white
   export AWS_KEY_ID="AWS Key ID, must be the same as your key pair name"
 ```
 
+  Copy your Chef user pem file to ~/.chef/[Your Chef user name].pem
+  Copy your Chef organization validator pem file to ~/.chef/[Your Chef organization name]-validator.pem
+  
   Test your connection to Chef server by going to 'chef' folder and using command
 ```
   knife client list
@@ -57,7 +60,18 @@ knife bootstrap localhost \
 vagrant ssh
 ```
 ## Use AWS to start a EC2 server and deploy the service
-
+We will try this out in us-east-1a zone at US East (N. Virginia) region.
+Make sure the Inbound ports for SSH and 8080, 8081 are opened for all sources in the security group you will use.
+Create a new key pair and download the pem file to safe place.
+Launch a new EC2 instance in region US East (N. Virginia), and create a AMI from it. Suppose the AMI id you created is 'AMI01'
+Start a EC2 instance and deploy the service.
+```
+knife ec2 server create \
+  --node-name [Node Name] \
+  --image AMI01 \
+  --identity-file [Key pair pem file] \
+  --run-list "role[consent_service_server]"
+```
 ## Test
   After consent_service is running, you can use curl to test whether the service is running
 ###  Post Consent
