@@ -16,6 +16,7 @@ project.ext {
     chefDir = "$projectDir/chef"
     chefFilesDir = "$chefDir/cookbooks/consent_service/files/default"
     knifeConfigFile = "$chefDir/.chef/knife.rb"
+    knifeRoleFile = "$chefDir/roles/consent_service_server.rb"
 }
 
 run {
@@ -65,6 +66,11 @@ task generateChef(type: Copy, dependsOn: [cleanChef, uberjar]) {
     into chefFilesDir
 }
 
+private void chefExecute(String command) {
+    println command.execute(null, new File(chefDir)).text
+}
+
 task uploadChef(dependsOn: generateChef) << {
-    println "knife cookbook upload --all -c $knifeConfigFile".execute(null, new File(chefDir)).text
+    chefExecute("knife cookbook upload --all -c $knifeConfigFile")
+    chefExecute("knife role from file $knifeRoleFile")
 }
