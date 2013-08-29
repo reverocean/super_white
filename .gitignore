@@ -2,12 +2,14 @@
 *.swp
 build
 .vagrant
-chef/vendor
 .gradle
 out
 *.iml
 *.ipr
 *.iws
 *.lock
+
+
+chef/vendor
 chef/cookbooks/consent_service/files/default/consent_service-standalone.jar
 chef/cookbooks/consent_service/files/default/consent.yaml
